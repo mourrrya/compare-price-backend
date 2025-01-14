@@ -7,7 +7,7 @@ export async function scrapeAllWebsites(configs: WebsiteConfig[]) {
   for (const config of configs) {
 
     if (config.name === 'blinkit') {
-      // await scrapBlinkit(config);
+      await scrapBlinkit(config);
     }
 
     if (config.name === 'zepto') {

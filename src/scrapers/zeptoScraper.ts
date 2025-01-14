@@ -5,8 +5,8 @@ import moment from "moment";
 import puppeteer from 'puppeteer';
 import { WebsiteConfig } from '../config/scraping-config';
 import { objToCsv } from '../helpers/fileModifier';
-import { scrollToEnd } from './smoothScroll';
 import { scrapProducts } from './scrapeProducts';
+import { scrollToEnd } from './smoothScroll';
 
 export const scrapZepto = async (config: WebsiteConfig) => {
   const browser = await puppeteer.launch({ headless: false });
@@ -82,5 +82,6 @@ export const scrapZepto = async (config: WebsiteConfig) => {
     }
 
   }
-
+  
+  await browser.close();
 }

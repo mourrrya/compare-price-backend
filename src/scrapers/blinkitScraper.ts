@@ -88,5 +88,5 @@ export const scrapBlinkit = async (config: WebsiteConfig) => {
         }
 
     }
-    // await browser.close();
+    await browser.close();
 }

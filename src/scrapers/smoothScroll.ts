@@ -2,29 +2,21 @@ import { WebsiteConfig } from "../config/scraping-config";
 import { Page } from "puppeteer";
 import { delay } from "../helpers/delay";
 
-export async function smoothScroll(container: Element) {
-  console.log("smoothScroll");
-
+export async function smoothScroll(container: Element, config: WebsiteConfig) {
   return new Promise((resolve) => {
     let scrollStep = 10; // Number of pixels to scroll per frame
     let intervalId: number | null = null;
-
     const scroll = () => {
       const maxScrollTop = container.scrollHeight - container.clientHeight;
-      console.log("container.scrollHeight", container.scrollHeight);
-      console.log("container.clientHeight", container.clientHeight);
-      console.log("container.scrollTop", container.scrollTop);
-      console.log("maxScrollTop", maxScrollTop);
-
-      if (container.scrollTop < maxScrollTop) {
+      if (Math.round(container.scrollTop) < Math.round(maxScrollTop)) {
         container.scrollTop += scrollStep; // Scroll by step
         intervalId = requestAnimationFrame(scroll);
       } else {
         cancelAnimationFrame(intervalId!); // Stop scrolling when at the bottom
-        resolve(void 0); // Resolve when scrolling ends
+        const productElements = document.querySelectorAll(config.selectors.productBlockSelector)
+        resolve(productElements.length);
       }
     };
-
     scroll();
   });
 }
@@ -33,7 +25,7 @@ export const scrollToEnd = async (page: Page, scrollContainerElement: HTMLElemen
 
   const loaderSelector = config.selectors.infiniteLoaderSelector;
 
-  await page.evaluate(async (scrollContainer, loaderSelector, smoothScroll, delay) => {
+  await page.evaluate(async (scrollContainer, loaderSelector, config, smoothScroll, delay) => {
     const smoothScrollFunc = new Function(`return (${smoothScroll})`)();
     const delayFunc = new Function(`return (${delay})`)();
 
@@ -41,26 +33,20 @@ export const scrollToEnd = async (page: Page, scrollContainerElement: HTMLElemen
 
     while (true) {
 
-      await smoothScrollFunc(scrollContainer);
+      const productCountAfterScroll = await smoothScrollFunc(scrollContainer, config);
 
-      const loader = document.querySelector(loaderSelector!);
+      const loader = await document.querySelector(loaderSelector!);
 
-      await delayFunc(1000);
+      await delayFunc(3000);
 
-      if (!!loader) {
-        console.log("loader found, continuing");
-        continue;
-      }
+      const productCountAfterDelay = await document.querySelectorAll(config.selectors.productBlockSelector).length;
 
-      if (!loader) {
-        console.log("loader not found, breaking");
-        break;
-      }
+      if (productCountAfterScroll === productCountAfterDelay && !loader) break;
+      else continue;
+
     }
 
     console.log("scrollToEnd finished");
 
-  }, scrollContainerElement, loaderSelector, smoothScroll.toString(), delay.toString());
-
-
+  }, scrollContainerElement, loaderSelector, config, smoothScroll.toString(), delay.toString());
 }
