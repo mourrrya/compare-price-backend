@@ -1,4 +1,7 @@
-type WebsiteName = 'zepto' | 'blinkit' | "swiggy";
+export type WebsiteName = 'zepto' | 'blinkit' | "swiggy";
+
+export type ProductCategory = "vegetables" | "fruits"
+
 export interface WebsiteConfig {
   url: string;
   name: WebsiteName;

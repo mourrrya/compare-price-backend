@@ -8,7 +8,13 @@ export async function smoothScroll(container: Element, config: WebsiteConfig) {
     let intervalId: number | null = null;
     const scroll = () => {
       const maxScrollTop = container.scrollHeight - container.clientHeight;
-      if (Math.round(container.scrollTop) < Math.round(maxScrollTop)) {
+      console.table({
+        scrollTop: container.scrollTop,
+        ceilScrollTop: Math.ceil(container.scrollTop),
+        maxScrollTop: maxScrollTop,
+        roundedMaxScrollTop: Math.round(maxScrollTop)
+      })
+      if (Math.ceil(container.scrollTop) < Math.round(maxScrollTop)) {
         container.scrollTop += scrollStep; // Scroll by step
         intervalId = requestAnimationFrame(scroll);
       } else {

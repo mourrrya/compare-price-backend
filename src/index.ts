@@ -1,7 +1,9 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import sequelize from './config/database';
-import Product from './models/Product';
+import './models/product';
+import './models/website';
+import "./models/index";
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,12 +24,12 @@ app.get('/', (_req: Request, res: Response) => {
 
 // Endpoint to get all products
 app.get('/products', async (_req: Request, res: Response) => {
-  try {
-    const products = await Product.findAll();
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch products' });
-  }
+  // try {
+  //   const products = await Product.findAll();
+  //   res.json(products);
+  // } catch (error) {
+  //   res.status(500).json({ error: 'Failed to fetch products' });
+  // }
 });
 
 app.listen(port, () => {

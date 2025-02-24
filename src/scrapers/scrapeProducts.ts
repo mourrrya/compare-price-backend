@@ -1,7 +1,18 @@
 import { WebsiteConfig } from "../config/scraping-config";
 import { Page } from "puppeteer";
 
-export const scrapProducts = async (page: Page, config: WebsiteConfig) => {
+export interface ProductScraped {
+    name: string;
+    quantity: string;
+    discountedPrice: number;
+    actualPrice: number;
+    imgUrl: string;
+    outOfStock: boolean;
+}
+
+
+
+export const scrapProducts = async (page: Page, config: WebsiteConfig): Promise<ProductScraped[]> => {
     const products = await page.evaluate((config) => {
         const {
             productBlockSelector,
@@ -16,11 +27,15 @@ export const scrapProducts = async (page: Page, config: WebsiteConfig) => {
         return Array.from(productElements).map((product) => {
             const name = product.querySelector(productName)?.textContent?.trim() || 'N/A';
             const quantity = product.querySelector(productQty)?.textContent?.trim() || 'N/A';
-            const discountedPrice = product.querySelector(productDiscountedPrice)?.textContent?.trim() || 'N/A';
-            const image = product.querySelector(productImgUrl)?.getAttribute('src') || 'N/A';
-            const actualPrice = product.querySelector(productActualPrice)?.textContent?.trim() || 'N/A';
+            let discountedPrice = product.querySelector(productDiscountedPrice)?.textContent?.trim() || 'N/A';
+            let actualPrice = product.querySelector(productActualPrice)?.textContent?.trim() || 'N/A';
+            const imgUrl = product.querySelector(productImgUrl)?.getAttribute('src') || 'N/A';
             const outOfStock = !!product.querySelector(productOutOfStock);
-            return { name, quantity, discountedPrice, actualPrice, outOfStock, image };
+
+            discountedPrice = discountedPrice.replace(/[^\d.]/g, '');
+            actualPrice = actualPrice.replace(/[^\d.]/g, '');
+
+            return { name, quantity, discountedPrice: parseFloat(discountedPrice), actualPrice: parseFloat(actualPrice), outOfStock, imgUrl };
         });
     }, config);
 

@@ -10,7 +10,11 @@
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "jest",
-    "scrape": "ts-node src/cron.ts"
+    "scrape": "ts-node src/cron.ts",
+    "findFruits": "ts-node src/findUniqueFruits.ts",
+    "findDuplicate": "ts-node src/findDuplicate.ts",
+    "mapVegetables": "ts-node src/mapVegetables.ts",
+    "mapFruits": "ts-node src/mapFruits.ts"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +30,7 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "fastcommerce-rate-comparison-backend": "file:",
+    "fuse.js": "^7.1.0",
     "moment": "^2.30.1",
     "node-cron": "^3.0.3",
     "papaparse": "^5.4.1",
