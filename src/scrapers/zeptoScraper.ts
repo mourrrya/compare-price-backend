@@ -1,6 +1,6 @@
 
 
-import puppeteer from 'puppeteer';
+import puppeteer, { ElementHandle } from 'puppeteer';
 import { WebsiteConfig } from '../config/scraping-config';
 import { ProductScraped, scrapProducts } from './scrapeProducts';
 import { scrollToEnd } from './smoothScroll';
@@ -12,7 +12,7 @@ export const scrapZepto = async (config: WebsiteConfig) => {
 
   await page.goto(config.url);
 
-  await page.setViewport({ width: 1600, height: 768 });
+  await page.setViewport({ width: 800, height: 600 });
 
   await page.waitForSelector('button[aria-label="Select Location"]', { visible: true, timeout: 60000 });
 
@@ -34,13 +34,21 @@ export const scrapZepto = async (config: WebsiteConfig) => {
 
   await page.click('button[data-testid="location-confirm-btn"]', { delay: 800 });
 
-  const fAndVElement = await page.$$("#CATEGORY_GRID_V3-element");
+  await page.waitForSelector('a[aria-label="go to Categories page"]', { visible: true, timeout: 60000 });
 
-  await page.evaluate((element) => {
-    element.scrollTop = 0;
-  }, fAndVElement[0]);
+  try {
+    await page.click('a[aria-label="go to Categories page"]', { delay: 300 });
+  } catch (error) {
+    console.log("category click failed", error);
+  }
 
-  fAndVElement[0].click({ delay: 500 });
+  await page.waitForSelector('#CATEGORY_GRID_V3-element a img', { visible: true, timeout: 60000 });
+
+  await page.evaluate(() => {
+    const element = document.querySelector('#CATEGORY_GRID_V3-element a') as HTMLElement;;
+    element.click();
+  });
+
 
   await page.waitForSelector('a.relative.mb-2.flex.cursor-pointer', { visible: true, timeout: 60000 });
 

@@ -11,11 +11,11 @@ export async function scrapeAllWebsites(configs: WebsiteConfig[]) {
   console.log('Starting scraping job...');
   for (const config of configs) {
 
-    // if (config.name === 'blinkit') {
-    //   const { freshVegetables, freshFruits } = await scrapBlinkit(config);
-    //   await addToFile(freshVegetables, "vegetables", config.name);
-    //   await addToFile(freshFruits, "fruits", config.name);
-    // }
+    if (config.name === 'blinkit') {
+      const { freshVegetables, freshFruits } = await scrapBlinkit(config);
+      await addToFile(freshVegetables, "vegetables", config.name);
+      await addToFile(freshFruits, "fruits", config.name);
+    }
 
     if (config.name === 'zepto') {
       const { freshVegetables, freshFruits } = await scrapZepto(config);
