@@ -59,11 +59,11 @@ const main = () => {
 
     const mathTheLists = (blinkitFruits: string[], zeptoFruits: string[]) => {
         const mappedProducts = fruitsWithoutDiffForms.map((product) => {
-            const blinkitFruitList = blinkitFruits.filter((blinkitFruit) => blinkitFruit.includes(product.name.toLocaleLowerCase()))
-            const zeptoFruitList = zeptoFruits.filter((zeptoFruit) => zeptoFruit.includes(product.name.toLocaleLowerCase()))
+            const blinkitFruitList = blinkitFruits.filter((blinkitFruit) => blinkitFruit.includes(product.first_name.toLocaleLowerCase()))
+            const zeptoFruitList = zeptoFruits.filter((zeptoFruit) => zeptoFruit.includes(product.first_name.toLocaleLowerCase()))
 
             return {
-                name: product.name,
+                name: product.first_name,
                 blinkitFruits: blinkitFruitList,
                 zeptoFruits: zeptoFruitList,
             }

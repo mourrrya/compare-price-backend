@@ -1,10 +1,10 @@
 import fs from "fs";
 import moment from "moment";
-import { ProductCategory, WebsiteConfig, WebsiteName } from '../config/scraping-config';
+import { VariantCategory, WebsiteConfig, WebsiteName } from '../config/scraping-config';
 import { objToCsv } from "../helpers/fileModifier";
-import { upsertProductsToDb } from "../services/product";
+import { upsertVariantsToDb } from "../services/productVariantServices";
 import { scrapBlinkit } from './blinkitScraper';
-import { ProductScraped, } from "./scrapeProducts";
+import { VariantScraped, } from "./scrapeProducts";
 import { scrapZepto } from './zeptoScraper';
 
 export async function scrapeAllWebsites(configs: WebsiteConfig[]) {
@@ -31,10 +31,10 @@ export async function scrapeAllWebsites(configs: WebsiteConfig[]) {
   console.log('Scraping job completed');
 }
 
-const addToFile = async (products: ProductScraped[], categoryName: ProductCategory, website: WebsiteName) => {
+const addToFile = async (products: VariantScraped[], categoryName: VariantCategory, website: WebsiteName) => {
   const date = moment().unix()
 
-  const data = await upsertProductsToDb(website, categoryName, products)
+  const data = await upsertVariantsToDb(website, categoryName, products)
 
   if (categoryName === "vegetables") {
     fs.writeFileSync(`scrappedData/${website}/freshVegetables/${date}.csv`, objToCsv(products))

@@ -2,11 +2,13 @@ import express, { Request, Response } from 'express';
 import cors from 'cors';
 import sequelize from './config/database';
 import './models/product';
+import './models/variant';
 import './models/website';
 import "./models/index";
+import { router } from './routes/routers';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
@@ -18,12 +20,11 @@ sequelize.sync().then(() => {
   console.error('Error synchronizing database:', err);
 });
 
-app.get('/', (_req: Request, res: Response) => {
-  res.json({ message: 'FastCommerce Rate Comparison' });
-});
+app.use("/", router);
 
 // Endpoint to get all products
 app.get('/products', async (_req: Request, res: Response) => {
+  res.send("Hello World!");
   // try {
   //   const products = await Product.findAll();
   //   res.json(products);

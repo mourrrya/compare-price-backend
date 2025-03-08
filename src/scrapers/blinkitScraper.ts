@@ -4,7 +4,7 @@ import puppeteer from "puppeteer";
 import { WebsiteConfig } from "../config/scraping-config";
 import { objToCsv } from "../helpers/fileModifier";
 import { scrollToEnd } from "./smoothScroll";
-import { ProductScraped, scrapProducts } from "./scrapeProducts";
+import { VariantScraped, scrapProducts } from "./scrapeProducts";
 
 export const scrapBlinkit = async (config: WebsiteConfig) => {
     // Launch the browser and open a new blank page
@@ -55,8 +55,8 @@ export const scrapBlinkit = async (config: WebsiteConfig) => {
 
     const categoryElements = await page.$$(categorySelector);
 
-    const freshVegetables: ProductScraped[] = []
-    const freshFruits: ProductScraped[] = []
+    const freshVegetables: VariantScraped[] = []
+    const freshFruits: VariantScraped[] = []
 
     for (const categoryElement of categoryElements) {
 

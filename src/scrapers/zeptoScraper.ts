@@ -2,7 +2,7 @@
 
 import puppeteer, { ElementHandle } from 'puppeteer';
 import { WebsiteConfig } from '../config/scraping-config';
-import { ProductScraped, scrapProducts } from './scrapeProducts';
+import { VariantScraped, scrapProducts } from './scrapeProducts';
 import { scrollToEnd } from './smoothScroll';
 
 
@@ -63,8 +63,8 @@ export const scrapZepto = async (config: WebsiteConfig) => {
     }
   }, scrollContainerElement);
 
-  const freshVegetables: ProductScraped[] = []
-  const freshFruits: ProductScraped[] = []
+  const freshVegetables: VariantScraped[] = []
+  const freshFruits: VariantScraped[] = []
 
   for (const [index, categoryElement] of categoryElements.entries()) {
     const categoryName = await page.evaluate((element) => {

@@ -1,6 +1,6 @@
 export type WebsiteName = 'zepto' | 'blinkit' | "swiggy";
 
-export type ProductCategory = "vegetables" | "fruits"
+export type VariantCategory = "vegetables" | "fruits"
 
 export interface WebsiteConfig {
   url: string;
@@ -10,7 +10,6 @@ export interface WebsiteConfig {
     infiniteLoaderSelector?: string
     productsGridSelector: string
     productBlockSelector: string
-
     productName: string;
     productActualPrice: string;
     productQty: string;

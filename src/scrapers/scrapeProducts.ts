@@ -1,7 +1,7 @@
 import { WebsiteConfig } from "../config/scraping-config";
 import { Page } from "puppeteer";
 
-export interface ProductScraped {
+export interface VariantScraped {
     name: string;
     quantity: string;
     discountedPrice: number;
@@ -12,7 +12,7 @@ export interface ProductScraped {
 
 
 
-export const scrapProducts = async (page: Page, config: WebsiteConfig): Promise<ProductScraped[]> => {
+export const scrapProducts = async (page: Page, config: WebsiteConfig): Promise<VariantScraped[]> => {
     const products = await page.evaluate((config) => {
         const {
             productBlockSelector,

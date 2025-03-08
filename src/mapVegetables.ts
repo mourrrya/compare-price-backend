@@ -1,7 +1,7 @@
 import fs from "fs";
 import blinkitVegetables from "../scrappedData/blinkit/freshVegetables/1740128504.json";
 import zeptoVegetables from "../scrappedData/zepto/freshVegetables/1740134102.json";
-import { productsWithoutDiffForms } from "./vegetableList";
+import { vegetablesWithoutDiffForms } from "./vegetableList";
 
 function splitString(input: string) {
     // Define the regular expression to match symbols, spaces, and integers
@@ -58,7 +58,7 @@ const main = () => {
     const zeptoVegetables = getZeptoVegetables()
 
     const mathTheLists = (blinkitVegetables: string[], zeptoVegetables: string[]) => {
-        const mappedProducts = productsWithoutDiffForms.map((product) => {
+        const mappedProducts = vegetablesWithoutDiffForms.map((product) => {
             const blinkitVegetable = blinkitVegetables.filter((blinkitVegetable) => blinkitVegetable.includes(product.name))
             const zeptoVegetable = zeptoVegetables.filter((zeptoVegetable) => zeptoVegetable.includes(product.name))
 
