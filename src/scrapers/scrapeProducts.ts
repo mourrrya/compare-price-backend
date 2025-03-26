@@ -8,6 +8,7 @@ export interface VariantScraped {
     actualPrice: number;
     imgUrl: string;
     outOfStock: boolean;
+    product_id?: number;
 }
 
 

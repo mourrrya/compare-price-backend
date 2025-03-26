@@ -41,7 +41,9 @@ Product.init(
     await Product.sync();
     const existingProducts = await Product.findAll();
     if (existingProducts.length === 0) {
-        const data = [...fruitsWithoutDiffForms, ...vegetablesWithoutDiffForms];
+        const fruits = fruitsWithoutDiffForms.map((fr) => ({ ...fr, first_name: fr.first_name.toLowerCase() }))
+        const vegetables = vegetablesWithoutDiffForms.map((veg) => ({ ...veg, first_name: veg.first_name.toLowerCase() }))
+        const data = [...fruits, ...vegetables];
         await Product.bulkCreate(data);
     }
 })();

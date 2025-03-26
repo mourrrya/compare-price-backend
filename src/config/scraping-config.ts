@@ -65,7 +65,7 @@ export const websitesToScrape: WebsiteConfig[] = [
       productBlockSelector: "a[data-testid='product-card']",
 
       productName: 'h5[data-testid="product-card-name"]',
-      productQty: 'span[data-testid="product-card-quantity"] > h4',
+      productQty: 'span[data-testid="product-card-quantity"] > h5',
       productDiscountedPrice: '.flex.items-baseline.gap-1 > h4',
       productActualPrice: '.flex.items-baseline.gap-1 > p',
       productOutOfStock: '.flex.content-center.items-center.justify-center.rounded-md.py-1.px-2.text-xs',

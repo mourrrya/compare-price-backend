@@ -62,7 +62,7 @@ export const scrapBlinkit = async (config: WebsiteConfig) => {
 
         const categoryName = await page.evaluate((element) => {
             const categoryNameSelector = ".CategoryListItem__Text-sc-ve8uzt-4";
-            const categoryName = element.querySelector(categoryNameSelector)?.textContent?.trim().toLocaleLowerCase() || 'N/A'
+            const categoryName = element.querySelector(categoryNameSelector)?.textContent?.trim().toLowerCase() || 'N/A'
             return categoryName
         }, categoryElement)
 

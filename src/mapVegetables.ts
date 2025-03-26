@@ -23,18 +23,18 @@ const findProducts = (products: any[]) => {
         actualSplittedProductName.push(splitString(product.name));
 
         if (product.name.toLowerCase().includes("combo")) {
-            combos.push(product.name.toLocaleLowerCase().trim());
+            combos.push(product.name.toLowerCase().trim());
             return;
         }
         if (product.name.toLowerCase().includes("organic")) {
-            organic.push(product.name.toLocaleLowerCase().trim());
+            organic.push(product.name.toLowerCase().trim());
             return;
         }
         if (product.name.toLowerCase().includes("hydroponic")) {
-            hydroponic.push(product.name.toLocaleLowerCase().trim());
+            hydroponic.push(product.name.toLowerCase().trim());
             return;
         }
-        productList.push(product.name.toLocaleLowerCase().trim());
+        productList.push(product.name.toLowerCase().trim());
     })
 
     return { productList, combos, organic, hydroponic, actualSplittedProductName }

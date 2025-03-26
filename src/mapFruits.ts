@@ -23,18 +23,18 @@ const findProducts = (products: any[]) => {
         actualSplittedProductName.push(splitString(product.name));
 
         if (product.name.toLowerCase().includes("combo")) {
-            combos.push(product.name.toLocaleLowerCase().trim());
+            combos.push(product.name.toLowerCase().trim());
             return;
         }
         if (product.name.toLowerCase().includes("organic")) {
-            organic.push(product.name.toLocaleLowerCase().trim());
+            organic.push(product.name.toLowerCase().trim());
             return;
         }
         if (product.name.toLowerCase().includes("hydroponic")) {
-            hydroponic.push(product.name.toLocaleLowerCase().trim());
+            hydroponic.push(product.name.toLowerCase().trim());
             return;
         }
-        productList.push(product.name.toLocaleLowerCase().trim());
+        productList.push(product.name.toLowerCase().trim());
     })
 
     return { productList, combos, organic, hydroponic, actualSplittedProductName }
@@ -59,8 +59,8 @@ const main = () => {
 
     const mathTheLists = (blinkitFruits: string[], zeptoFruits: string[]) => {
         const mappedProducts = fruitsWithoutDiffForms.map((product) => {
-            const blinkitFruitList = blinkitFruits.filter((blinkitFruit) => blinkitFruit.includes(product.first_name.toLocaleLowerCase()))
-            const zeptoFruitList = zeptoFruits.filter((zeptoFruit) => zeptoFruit.includes(product.first_name.toLocaleLowerCase()))
+            const blinkitFruitList = blinkitFruits.filter((blinkitFruit) => blinkitFruit.includes(product.first_name.toLowerCase()))
+            const zeptoFruitList = zeptoFruits.filter((zeptoFruit) => zeptoFruit.includes(product.first_name.toLowerCase()))
 
             return {
                 name: product.first_name,
@@ -89,33 +89,4 @@ const main = () => {
 }
 
 main()
-
-// const compareLists = (blinkitFruits: string[], zeptoFruits: string[]) => {
-//     const matches: { blinkitVegetable: string, zeptoVegetable: string }[] = [];
-//     const mismatchedZeptoFruits: string[] = [];
-//     const mismatchedBlinkitFruits: string[] = [];
-
-//     blinkitFruits.forEach((blinkitVegetable) => {
-//         const zeptoVegetable = zeptoFruits.find((zeptoVegetable) => zeptoVegetable === blinkitVegetable)
-//         if (zeptoVegetable) {
-//             matches.push({ blinkitVegetable, zeptoVegetable });
-//         } else {
-//             mismatchedBlinkitFruits.push(blinkitVegetable);
-//         }
-//     });
-
-//     zeptoFruits.forEach((zeptoVegetable) => {
-//         if (!matches.find((match) => match.zeptoVegetable === zeptoVegetable)) {
-//             mismatchedZeptoFruits.push(zeptoVegetable);
-//         }
-//     });
-
-
-//     return {
-//         matches,
-//         mismatchedZeptoFruits,
-//         mismatchedBlinkitFruits
-//     }
-// }
-
 

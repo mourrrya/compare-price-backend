@@ -22,17 +22,6 @@ sequelize.sync().then(() => {
 
 app.use("/", router);
 
-// Endpoint to get all products
-app.get('/products', async (_req: Request, res: Response) => {
-  res.send("Hello World!");
-  // try {
-  //   const products = await Product.findAll();
-  //   res.json(products);
-  // } catch (error) {
-  //   res.status(500).json({ error: 'Failed to fetch products' });
-  // }
-});
-
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

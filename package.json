@@ -11,6 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "jest",
     "scrape": "ts-node src/cron.ts",
+    "scrape-inspect": "node --inspect-brk -r ts-node/register src/cron.ts",
     "findFruits": "ts-node src/findUniqueFruits.ts",
     "findDuplicate": "ts-node src/findDuplicate.ts",
     "mapVegetables": "ts-node src/mapVegetables.ts",

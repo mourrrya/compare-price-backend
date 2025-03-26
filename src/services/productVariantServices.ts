@@ -1,8 +1,24 @@
-    // create a design for services related to product
+// create a design for services related to product
 
 import { VariantScraped } from "@/scrapers/scrapeProducts";
 import { VariantCategory, WebsiteName } from "../config/scraping-config";
 import Variant from "../models/variant";
+import Product from "../models/product";
+import { Op } from "sequelize";
+import { productVariantMapping } from "../helpers/productVariantMapping";
+
+export const productVariants = async () => {
+    const productsWithVariants = await Product.findAll({
+        include: {
+            model: Variant,
+            where: {
+                product_id: { [Op.ne]: null }, // Exclude variants without a product
+            },
+            required: false, // Ensures products without variants are still included
+        },
+    });
+    return productsWithVariants
+}
 
 export const getVariants = async () => {
     return await Variant.findAll();
@@ -10,16 +26,34 @@ export const getVariants = async () => {
 
 export const upsertVariantsToDb = async (website: WebsiteName, categoryName: VariantCategory, variants: VariantScraped[]) => {
 
-    const variantData = variants.map((variant) => {
+    const categoryMap: Record<VariantCategory, number> = {
+        fruits: 2,
+        vegetables: 1
+    };
+
+    const websiteMap: Record<WebsiteName, number> = {
+        blinkit: 1,
+        zepto: 2,
+        swiggy: 3
+    };
+
+    const products = await Product.findAll({ where: { category_id: categoryMap[categoryName] }, });
+
+    const productData = products.map(product => product.get({ plain: true }));
+    
+    const mappedVariants = productVariantMapping(productData, variants,)
+
+    const variantData = mappedVariants.map((variant) => {
         return {
-            name: variant.name,
+            name: variant.name.toLowerCase(),
             quantity: variant.quantity,
             discounted_price: variant.discountedPrice,
             actual_price: variant.actualPrice,
             img_url: variant.imgUrl,
             out_of_stock: !!variant.outOfStock,
-            website_id: website === "blinkit" ? 1 : website === "zepto" ? 2 : "NA",
-            category_id: categoryName === "vegetables" ? 1 : categoryName === "fruits" ? 2 : "NA",
+            product_id: variant.product_id,
+            website_id: websiteMap[website],
+            category_id: categoryMap[categoryName],
             last_scraped: new Date(),
         };
     });

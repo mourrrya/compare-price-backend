@@ -69,7 +69,7 @@ export const scrapZepto = async (config: WebsiteConfig) => {
   for (const [index, categoryElement] of categoryElements.entries()) {
     const categoryName = await page.evaluate((element) => {
       const categoryNameSelector = "p";
-      const categoryName = element.querySelector(categoryNameSelector)?.textContent?.trim().toLocaleLowerCase() || 'N/A'
+      const categoryName = element.querySelector(categoryNameSelector)?.textContent?.trim().toLowerCase() || 'N/A'
       return categoryName
     }, categoryElement)
 
