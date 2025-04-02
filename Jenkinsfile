@@ -10,8 +10,8 @@ pipeline {
 
         stage('Check Node Version') {
             steps {
-                sh 'export NVM_DIR="$HOME/.nvm" && source $NVM_DIR/nvm.sh && node -v'
-                sh 'export NVM_DIR="$HOME/.nvm" && source $NVM_DIR/nvm.sh && npm -v'
+                sh 'node -v'
+                sh 'npm -v'
             }
         }
 
